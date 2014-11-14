@@ -1,6 +1,6 @@
-#include "stdafx.h"\
+#include "stdafx.h"
 #include "OSMCtrlApp.h"
-#include "OSMCtrlAppDoc.h"
+#include "OSMCtrlAppDoc.h" 
 #include "OSMCtrlAppView.h"
 #include "TilePropertiesDlg.h"
 #include "GPSSettingsDlg.h"
