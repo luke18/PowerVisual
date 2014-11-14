@@ -1,4 +1,4 @@
-#include "stdafx.h"
+#include "stdafx.h"\
 #include "OSMCtrlApp.h"
 #include "OSMCtrlAppDoc.h"
 #include "OSMCtrlAppView.h"
