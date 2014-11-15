@@ -4,8 +4,13 @@
 #include "GPSCom2Client.h" //If you get a compilation error about this missing header file, then you need to download my GPSCom2 classes from http://www.naughter.com/gpscom2.html
 #include "OSMCtrlGPX.h"
 #include "OSMCtrlTileProviders.h"
+#include "OSMCtrlAppDoc.h"
 #include "MFCSensor.h" //If you get a compilation error about this missing header file, then you need to download my MFCSensor code from http://www.naughter.com/mfcsensor.html
-
+#include <string>
+#include <sstream>
+#include <iostream>
+#include <vector>
+#include <fstream>
 
 class CMySensorEvents : public SensorAPI::CSensorEvents
 {
@@ -23,8 +28,10 @@ protected: // create from serialization only
 // Attributes
 public:
   COSMCtrlAppDoc* GetDocument() const;
+  COSMCtrlAppDoc*pDoc;
   COSMCtrl& GetCtrl() { return m_ctrlOSM; };
-
+  double busBranchArray[81][81];
+  int currentTimeInt;
 // Operations
 public:
 
@@ -41,6 +48,10 @@ protected:
 // Implementation
 public:
   virtual ~COSMCtrlAppView();
+
+  void UpdateStations(int timeNumber); // Fetch stations in doc and show on map
+
+
 #ifdef _DEBUG
   virtual void AssertValid() const;
   virtual void Dump(CDumpContext& dc) const;
@@ -70,6 +81,10 @@ protected:
   void DoAddressLookup(CPoint point);
   void DoRefreshTile(CPoint point);
   void DoTileProperties(CPoint point);
+
+  int FindBusNumByI(double bus_i, std::vector<StationStruct> m_Stations); //Find the father number  of the bus_i(0,1,2...)
+
+
 #ifdef COSMCTRL_NOD2D
   HRESULT LoadResourceImage(LPCTSTR pName, LPCTSTR pType, HMODULE hInst, Gdiplus::Image*& pImage);
 #endif
