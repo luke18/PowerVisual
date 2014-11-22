@@ -256,12 +256,17 @@ BOOL CMainFrame::OnCreateClient(LPCREATESTRUCT lpcs, CCreateContext* pContext)
 	//将CFormCommand连接到0行0列窗格上
 	//m_splitter.CreateView(0,0,RUNTIME_CLASS(CFormCommandView),CSize(200,200),pContext); 
 	//将CMyGameView连接到0行1列窗格上
-	m_splitter.CreateView(0, 1, RUNTIME_CLASS(COSMCtrlAppView), CSize(rect.Width() / 5, rect.Height()), pContext);
+	m_splitter.CreateView(0, 1, RUNTIME_CLASS(CInfoView), CSize(rect.Width() / 5, rect.Height()), pContext);
 	m_splitter2.CreateStatic(&m_splitter, 1, 2, WS_CHILD | WS_VISIBLE, m_splitter.IdFromRowCol(0, 0));
-	m_splitter2.CreateView(0, 0, RUNTIME_CLASS(COSMCtrlAppView), CSize(rect.Width() / 5, rect.Height()), pContext);
+	m_splitter2.CreateView(0, 0, RUNTIME_CLASS(CFunctionView), CSize(rect.Width() / 5, rect.Height()), pContext);
 	m_splitter3.CreateStatic(&m_splitter2, 2, 1, WS_CHILD | WS_VISIBLE, m_splitter2.IdFromRowCol(0, 1));
-	m_splitter3.CreateView(0, 0, RUNTIME_CLASS(COSMCtrlAppView), CSize(rect.Width()*0.6, rect.Height() / 3), pContext);
+	m_splitter3.CreateView(0, 0, RUNTIME_CLASS(CTableView), CSize(rect.Width()*0.6, rect.Height() / 3), pContext);
 	m_splitter3.CreateView(1, 0, RUNTIME_CLASS(COSMCtrlAppView), CSize(rect.Width()*0.6, rect.Height() * 2 / 3), pContext);
+
+	pTableView = (CTableView*)m_splitter3.GetPane(0, 0);
+	//pMapView = (COSMCtrlAppView*)m_splitter3.GetPane(1, 0);
+	pInfoView = (CInfoView*)m_splitter.GetPane(0, 1);
+	pFunctionView = (CFunctionView*)m_splitter2.GetPane(0, 0);
 
 	return TRUE;
 

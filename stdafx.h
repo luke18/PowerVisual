@@ -62,6 +62,7 @@
 #include <atlimage.h>
 #include <sensors.h>
 #include <sensorsapi.h>
+#include <afxcontrolbars.h>
 
 #define CBITSWRAPPERS_MFC_EXTENSIONS
 

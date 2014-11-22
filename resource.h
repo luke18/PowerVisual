@@ -1,6 +1,6 @@
 //{{NO_DEPENDENCIES}}
-// Microsoft Visual C++ generated include file.
-// Used by OSMCtrlApp.rc
+// Microsoft Visual C++ 生成的包含文件。
+// 供 OSMCtrlApp.rc 使用
 //
 #define IDD_ABOUTBOX                    100
 #define IDD_TILE_PROPERTIES             101
@@ -19,12 +19,15 @@
 #define IDS_OSMCTRL_TILE_NOT_AVAILABLE  133
 #define IDD_GOTO_COORDINATES            133
 #define IDS_OSMCTRL_NO_VALID_SELECTION  134
+#define IDD_FORMVIEW                    134
 #define IDS_OSMCTRL_TILE_NOT_AVAILABLE2 135
 #define IDS_OSMCTRL_MAP_OPERATIONS_UPDATE_ZOOM3 136
 #define IDS_OSMCTRL_MAP_OPERATIONS_UPDATE_ZOOM2 137
 #define IDS_CLICK_ON_MAP_FOR_REFRESHTILE 138
+#define IDD_FORMVIEW1                   138
 #define IDS_OSMCTRL_DELETE_FILES_STATS  139
 #define IDS_OSMCTRL_DOWNLOAD_TILES_STATS 140
+#define IDD_FORMVIEW2                   140
 #define IDS_OSMCTRL_RERENDER_TILES_STATS 141
 #define IDS_OSMCTRL_COPYRIGHT           142
 #define IDS_NO_GPS_PORT                 143
@@ -130,7 +133,7 @@
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        133
+#define _APS_NEXT_RESOURCE_VALUE        141
 #define _APS_NEXT_COMMAND_VALUE         32854
 #define _APS_NEXT_CONTROL_VALUE         1023
 #define _APS_NEXT_SYMED_VALUE           104

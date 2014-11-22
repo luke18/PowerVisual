@@ -13,11 +13,265 @@
 #undef APSTUDIO_READONLY_SYMBOLS
 
 /////////////////////////////////////////////////////////////////////////////
-// English (Ireland) resources
+// ÷–Œƒ(ºÚÃÂ£¨÷–π˙) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_CHS)
+LANGUAGE LANG_CHINESE, SUBLANG_CHINESE_SIMPLIFIED
+#pragma code_page(936)
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_FORMVIEW DIALOGEX 0, 0, 185, 93
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD
+FONT 9, "ÀŒÃÂ", 400, 0, 0x0
+BEGIN
+    LTEXT           "TODO:  ≤ºæ÷¥∞ÃÂ ”Õº",IDC_STATIC,55,42,74,8
+END
+
+IDD_FORMVIEW1 DIALOGEX 0, 0, 185, 93
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD
+FONT 9, "ÀŒÃÂ", 400, 0, 0x0
+BEGIN
+    LTEXT           "TODO:  ≤ºæ÷¥∞ÃÂ ”Õº",IDC_STATIC,55,42,74,8
+END
+
+IDD_FORMVIEW2 DIALOGEX 0, 0, 185, 93
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD
+FONT 9, "ÀŒÃÂ", 400, 0, 0x0
+BEGIN
+    LTEXT           "TODO:  ≤ºæ÷¥∞ÃÂ ”Õº",IDC_STATIC,55,42,74,8
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO
+BEGIN
+    IDD_FORMVIEW, DIALOG
+    BEGIN
+    END
+
+    IDD_FORMVIEW1, DIALOG
+    BEGIN
+    END
+
+    IDD_FORMVIEW2, DIALOG
+    BEGIN
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+#endif    // ÷–Œƒ(ºÚÃÂ£¨÷–π˙) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+/////////////////////////////////////////////////////////////////////////////
+// ”¢”Ô(∞Æ∂˚¿º) resources
 
 #if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENI)
 LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_EIRE
 #pragma code_page(1252)
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_ABOUTBOX DIALOGEX 0, 0, 216, 86
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "About OSMCtrlApp"
+FONT 8, "MS Shell Dlg", 0, 0, 0x1
+BEGIN
+    ICON            IDR_MAINFRAME,IDC_STATIC,7,7,20,20
+    LTEXT           "OSMCtrlApp - A demonstration application using the class ""COSMCtrl"" to display OpenStreetMap tiles",IDC_STATIC,40,10,169,22,SS_NOPREFIX
+    DEFPUSHBUTTON   "OK",IDOK,159,63,50,16,WS_GROUP
+    CONTROL         "Maps © <A HREF=""http://www.openstreetmap.org/"">OpenStreetMap contributors</A>, <A HREF=""www.openstreetmap.org/copyright "">License</A>",IDC_LICENSE_DETAILS,
+                    "SysLink",WS_TABSTOP,40,40,169,14
+END
+
+IDD_TILE_PROPERTIES DIALOGEX 0, 0, 313, 182
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION
+CAPTION "Tile Properties"
+FONT 8, "MS Shell Dlg", 0, 0, 0x1
+BEGIN
+    LTEXT           "Provider:",IDC_STATIC,7,7,30,8
+    LTEXT           "N/A",IDC_PROVIDER,65,7,241,8
+    LTEXT           "URL:",IDC_STATIC,7,22,16,8
+    CONTROL         "N/A",IDC_URL,"SysLink",WS_TABSTOP,65,20,241,9
+    LTEXT           "Cache Path:",IDC_STATIC,7,37,40,8
+    CONTROL         "N/A",IDC_CACHE_PATH,"SysLink",WS_TABSTOP,65,36,241,9
+    LTEXT           "Dimensions:",IDC_STATIC,7,52,39,8
+    LTEXT           "N/A",IDC_DIMENSIONS,65,52,241,8
+    LTEXT           "Center Position:",IDC_STATIC,7,67,52,8
+    LTEXT           "N/A",IDC_CENTERPOSITION,65,67,241,8
+    LTEXT           "Coordinates:",IDC_STATIC,7,82,42,8
+    LTEXT           "N/A",IDC_TILE_COORDINATES,65,82,241,8
+    LTEXT           "Rerender URL:",IDC_STATIC,7,97,48,8
+    CONTROL         "N/A",IDC_RERENDER_URL,"SysLink",WS_TABSTOP,64,97,242,9
+    LTEXT           "Status URL:",IDC_STATIC,7,113,39,8
+    CONTROL         "N/A",IDC_STATUS_URL,"SysLink",WS_TABSTOP,65,113,241,9
+    LTEXT           "Date Modified:",IDC_STATIC,7,130,48,8
+    LTEXT           "N/A",IDC_DATE_MODIFIED,65,130,241,8
+    DEFPUSHBUTTON   "OK",IDOK,256,159,50,16,WS_GROUP
+END
+
+IDD_OSMCTRL_OPERATIONS DIALOGEX 0, 0, 279, 150
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Map Operations"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    LTEXT           "&Operation to Perform:",IDC_STATIC,7,15,72,8
+    COMBOBOX        IDC_OPERATION,91,11,179,54,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "To what &zoom level:",IDC_STATIC,7,40,65,8
+    CONTROL         "",IDC_ZOOM_LEVEL,"msctls_trackbar32",TBS_AUTOTICKS | TBS_BOTH | WS_TABSTOP,91,32,181,22
+    LTEXT           "Status:",IDC_STATIC,7,62,24,8
+    LTEXT           "",IDC_STATUS_TEXT,42,62,230,8
+    CONTROL         "",IDC_PROGRESS,"msctls_progress32",WS_BORDER,7,76,265,14
+    PUSHBUTTON      "&Start Operation",ID_START_OPERATION,33,97,101,14
+    PUSHBUTTON      "S&top Operation",ID_STOP_OPERATION,147,97,101,14
+    DEFPUSHBUTTON   "OK",IDCANCEL,222,129,50,14
+END
+
+IDD_GPS_SETTINGS DIALOGEX 0, 0, 245, 162
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION
+CAPTION "GPS Settings"
+FONT 8, "MS Shell Dlg", 0, 0, 0x1
+BEGIN
+    LTEXT           "&Port / Sensor:",IDC_STATIC,7,10,46,8
+    COMBOBOX        IDC_PORT,59,7,179,70,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "&Baud Rate:",IDC_STATIC,7,29,37,8
+    COMBOBOX        IDC_BAUDRATE,59,26,120,30,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "&Parity:",IDC_STATIC,7,44,22,8
+    COMBOBOX        IDC_PARITY,59,43,120,30,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "&Data Bits:",IDC_STATIC,7,61,32,8
+    COMBOBOX        IDC_DATABITS,59,60,120,30,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "Stop Bits:",IDC_STATIC,7,80,32,8
+    COMBOBOX        IDC_STOPBITS,59,78,120,30,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+    CONTROL         "&Center the map on the current GPS location",IDC_GPS_CENTER,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,7,103,155,10
+    CONTROL         "Change the &bearing of the map to match the direction of travel",IDC_GPS_CHANGE_BEARING,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,7,116,217,10
+    CONTROL         "Enable GP&X Track Log",IDC_GPX_TRACKLOG,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,7,129,85,10
+    DEFPUSHBUTTON   "OK",IDOK,188,139,50,16,WS_GROUP
+END
+
+IDD_SEARCH_RESULTS DIALOGEX 0, 0, 313, 182
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION
+CAPTION "Search Results from Nominatim"
+FONT 8, "MS Shell Dlg", 0, 0, 0x1
+BEGIN
+    LTEXT           "Multiple results were returned. Please select the POI to go to:",-1,7,7,203,8
+    LISTBOX         IDC_SEARCH_RESULTS,7,20,299,133,LBS_NOINTEGRALHEIGHT | WS_VSCROLL | WS_TABSTOP
+    DEFPUSHBUTTON   "OK",IDOK,256,159,50,16,WS_GROUP
+END
+
+IDD_SEARCH DIALOGEX 0, 0, 327, 74
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION
+CAPTION "Nominatim Search"
+FONT 8, "MS Shell Dlg", 0, 0, 0x1
+BEGIN
+    LTEXT           "Please enter what you would like to search for, examples: 'Alkmaar', 'Regent Street, Cambridge', 'postcode SW1', or 'pubs near Gorey, County Wexford'",-1,7,7,313,20
+    EDITTEXT        IDC_SEARCH,7,30,313,15,ES_AUTOHSCROLL
+    DEFPUSHBUTTON   "OK",IDOK,270,51,50,16,WS_GROUP
+END
+
+IDD_GOTO_COORDINATES DIALOGEX 0, 0, 215, 94
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION
+CAPTION "Goto Coordinates"
+FONT 8, "MS Shell Dlg", 0, 0, 0x1
+BEGIN
+    LTEXT           "Please specify the map coordinates you want to goto:",IDC_STATIC,7,7,201,12
+    LTEXT           "&Longitude:",IDC_STATIC,7,28,38,8
+    EDITTEXT        IDC_LONGITUDE_DEGREES,50,25,40,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_LONGITUDE_MINUTES,103,25,40,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_LONGITUDE_SECONDS,156,25,40,14,ES_AUTOHSCROLL
+    LTEXT           "L&atitude:",IDC_STATIC,7,48,37,8
+    EDITTEXT        IDC_LATITUDE_DEGREES,50,45,40,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_LATITUDE_MINUTES,103,45,40,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_LATITUDE_SECONDS,156,45,40,14,ES_AUTOHSCROLL
+    DEFPUSHBUTTON   "OK",IDOK,158,71,50,16,WS_GROUP
+    LTEXT           "∞",IDC_STATIC,93,26,8,8
+    LTEXT           "∞",IDC_STATIC,93,46,8,8
+    LTEXT           "'",IDC_STATIC,147,46,8,8
+    LTEXT           "'",IDC_STATIC,147,27,8,8
+    LTEXT           """",IDC_STATIC,199,27,8,8
+    LTEXT           """",IDC_STATIC,199,46,8,8
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO
+BEGIN
+    IDD_ABOUTBOX, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 209
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 79
+    END
+
+    IDD_TILE_PROPERTIES, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 306
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 175
+    END
+
+    IDD_OSMCTRL_OPERATIONS, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 272
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 143
+    END
+
+    IDD_GPS_SETTINGS, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 238
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 155
+    END
+
+    IDD_SEARCH_RESULTS, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 306
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 175
+    END
+
+    IDD_SEARCH, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 320
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 67
+    END
+
+    IDD_GOTO_COORDINATES, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 208
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 87
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
 
 #ifdef APSTUDIO_INVOKED
 /////////////////////////////////////////////////////////////////////////////
@@ -226,133 +480,6 @@ END
 
 /////////////////////////////////////////////////////////////////////////////
 //
-// Dialog
-//
-
-IDD_ABOUTBOX DIALOGEX 0, 0, 216, 86
-STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
-CAPTION "About OSMCtrlApp"
-FONT 8, "MS Shell Dlg", 0, 0, 0x1
-BEGIN
-    ICON            IDR_MAINFRAME,IDC_STATIC,7,7,20,20
-    LTEXT           "OSMCtrlApp - A demonstration application using the class ""COSMCtrl"" to display OpenStreetMap tiles",IDC_STATIC,40,10,169,22,SS_NOPREFIX
-    DEFPUSHBUTTON   "OK",IDOK,159,63,50,16,WS_GROUP
-    CONTROL         "Maps © <A HREF=""http://www.openstreetmap.org/"">OpenStreetMap contributors</A>, <A HREF=""www.openstreetmap.org/copyright "">License</A>",IDC_LICENSE_DETAILS,
-                    "SysLink",WS_TABSTOP,40,40,169,14
-END
-
-IDD_TILE_PROPERTIES DIALOGEX 0, 0, 313, 182
-STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION
-CAPTION "Tile Properties"
-FONT 8, "MS Shell Dlg", 0, 0, 0x1
-BEGIN
-    LTEXT           "Provider:",IDC_STATIC,7,7,30,8
-    LTEXT           "N/A",IDC_PROVIDER,65,7,241,8
-    LTEXT           "URL:",IDC_STATIC,7,22,16,8
-    CONTROL         "N/A",IDC_URL,"SysLink",WS_TABSTOP,65,20,241,9
-    LTEXT           "Cache Path:",IDC_STATIC,7,37,40,8
-    CONTROL         "N/A",IDC_CACHE_PATH,"SysLink",WS_TABSTOP,65,36,241,9
-    LTEXT           "Dimensions:",IDC_STATIC,7,52,39,8
-    LTEXT           "N/A",IDC_DIMENSIONS,65,52,241,8
-    LTEXT           "Center Position:",IDC_STATIC,7,67,52,8
-    LTEXT           "N/A",IDC_CENTERPOSITION,65,67,241,8
-    LTEXT           "Coordinates:",IDC_STATIC,7,82,42,8
-    LTEXT           "N/A",IDC_TILE_COORDINATES,65,82,241,8
-    LTEXT           "Rerender URL:",IDC_STATIC,7,97,48,8
-    CONTROL         "N/A",IDC_RERENDER_URL,"SysLink",WS_TABSTOP,64,97,242,9
-    LTEXT           "Status URL:",IDC_STATIC,7,113,39,8
-    CONTROL         "N/A",IDC_STATUS_URL,"SysLink",WS_TABSTOP,65,113,241,9
-    LTEXT           "Date Modified:",IDC_STATIC,7,130,48,8
-    LTEXT           "N/A",IDC_DATE_MODIFIED,65,130,241,8
-    DEFPUSHBUTTON   "OK",IDOK,256,159,50,16,WS_GROUP
-END
-
-IDD_OSMCTRL_OPERATIONS DIALOGEX 0, 0, 279, 150
-STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
-CAPTION "Map Operations"
-FONT 8, "MS Shell Dlg", 400, 0, 0x1
-BEGIN
-    LTEXT           "&Operation to Perform:",IDC_STATIC,7,15,72,8
-    COMBOBOX        IDC_OPERATION,91,11,179,54,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
-    LTEXT           "To what &zoom level:",IDC_STATIC,7,40,65,8
-    CONTROL         "",IDC_ZOOM_LEVEL,"msctls_trackbar32",TBS_AUTOTICKS | TBS_BOTH | WS_TABSTOP,91,32,181,22
-    LTEXT           "Status:",IDC_STATIC,7,62,24,8
-    LTEXT           "",IDC_STATUS_TEXT,42,62,230,8
-    CONTROL         "",IDC_PROGRESS,"msctls_progress32",WS_BORDER,7,76,265,14
-    PUSHBUTTON      "&Start Operation",ID_START_OPERATION,33,97,101,14
-    PUSHBUTTON      "S&top Operation",ID_STOP_OPERATION,147,97,101,14
-    DEFPUSHBUTTON   "OK",IDCANCEL,222,129,50,14
-END
-
-IDD_GPS_SETTINGS DIALOGEX 0, 0, 245, 162
-STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION
-CAPTION "GPS Settings"
-FONT 8, "MS Shell Dlg", 0, 0, 0x1
-BEGIN
-    LTEXT           "&Port / Sensor:",IDC_STATIC,7,10,46,8
-    COMBOBOX        IDC_PORT,59,7,179,70,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
-    LTEXT           "&Baud Rate:",IDC_STATIC,7,29,37,8
-    COMBOBOX        IDC_BAUDRATE,59,26,120,30,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
-    LTEXT           "&Parity:",IDC_STATIC,7,44,22,8
-    COMBOBOX        IDC_PARITY,59,43,120,30,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
-    LTEXT           "&Data Bits:",IDC_STATIC,7,61,32,8
-    COMBOBOX        IDC_DATABITS,59,60,120,30,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
-    LTEXT           "Stop Bits:",IDC_STATIC,7,80,32,8
-    COMBOBOX        IDC_STOPBITS,59,78,120,30,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
-    CONTROL         "&Center the map on the current GPS location",IDC_GPS_CENTER,
-                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,7,103,155,10
-    CONTROL         "Change the &bearing of the map to match the direction of travel",IDC_GPS_CHANGE_BEARING,
-                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,7,116,217,10
-    CONTROL         "Enable GP&X Track Log",IDC_GPX_TRACKLOG,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,7,129,85,10
-    DEFPUSHBUTTON   "OK",IDOK,188,139,50,16,WS_GROUP
-END
-
-IDD_SEARCH_RESULTS DIALOGEX 0, 0, 313, 182
-STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION
-CAPTION "Search Results from Nominatim"
-FONT 8, "MS Shell Dlg", 0, 0, 0x1
-BEGIN
-    LTEXT           "Multiple results were returned. Please select the POI to go to:",-1,7,7,203,8
-    LISTBOX         IDC_SEARCH_RESULTS,7,20,299,133,LBS_NOINTEGRALHEIGHT | WS_VSCROLL | WS_TABSTOP
-    DEFPUSHBUTTON   "OK",IDOK,256,159,50,16,WS_GROUP
-END
-
-IDD_SEARCH DIALOGEX 0, 0, 327, 74
-STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION
-CAPTION "Nominatim Search"
-FONT 8, "MS Shell Dlg", 0, 0, 0x1
-BEGIN
-    LTEXT           "Please enter what you would like to search for, examples: 'Alkmaar', 'Regent Street, Cambridge', 'postcode SW1', or 'pubs near Gorey, County Wexford'",-1,7,7,313,20
-    EDITTEXT        IDC_SEARCH,7,30,313,15,ES_AUTOHSCROLL
-    DEFPUSHBUTTON   "OK",IDOK,270,51,50,16,WS_GROUP
-END
-
-IDD_GOTO_COORDINATES DIALOGEX 0, 0, 215, 94
-STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION
-CAPTION "Goto Coordinates"
-FONT 8, "MS Shell Dlg", 0, 0, 0x1
-BEGIN
-    LTEXT           "Please specify the map coordinates you want to goto:",IDC_STATIC,7,7,201,12
-    LTEXT           "&Longitude:",IDC_STATIC,7,28,38,8
-    EDITTEXT        IDC_LONGITUDE_DEGREES,50,25,40,14,ES_AUTOHSCROLL
-    EDITTEXT        IDC_LONGITUDE_MINUTES,103,25,40,14,ES_AUTOHSCROLL
-    EDITTEXT        IDC_LONGITUDE_SECONDS,156,25,40,14,ES_AUTOHSCROLL
-    LTEXT           "L&atitude:",IDC_STATIC,7,48,37,8
-    EDITTEXT        IDC_LATITUDE_DEGREES,50,45,40,14,ES_AUTOHSCROLL
-    EDITTEXT        IDC_LATITUDE_MINUTES,103,45,40,14,ES_AUTOHSCROLL
-    EDITTEXT        IDC_LATITUDE_SECONDS,156,45,40,14,ES_AUTOHSCROLL
-    DEFPUSHBUTTON   "OK",IDOK,158,71,50,16,WS_GROUP
-    LTEXT           "∞",IDC_STATIC,93,26,8,8
-    LTEXT           "∞",IDC_STATIC,93,46,8,8
-    LTEXT           "'",IDC_STATIC,147,46,8,8
-    LTEXT           "'",IDC_STATIC,147,27,8,8
-    LTEXT           """",IDC_STATIC,199,27,8,8
-    LTEXT           """",IDC_STATIC,199,46,8,8
-END
-
-
-/////////////////////////////////////////////////////////////////////////////
-//
 // Version
 //
 
@@ -388,73 +515,6 @@ BEGIN
         VALUE "Translation", 0x409, 1252
     END
 END
-
-
-/////////////////////////////////////////////////////////////////////////////
-//
-// DESIGNINFO
-//
-
-#ifdef APSTUDIO_INVOKED
-GUIDELINES DESIGNINFO
-BEGIN
-    IDD_ABOUTBOX, DIALOG
-    BEGIN
-        LEFTMARGIN, 7
-        RIGHTMARGIN, 209
-        TOPMARGIN, 7
-        BOTTOMMARGIN, 79
-    END
-
-    IDD_TILE_PROPERTIES, DIALOG
-    BEGIN
-        LEFTMARGIN, 7
-        RIGHTMARGIN, 306
-        TOPMARGIN, 7
-        BOTTOMMARGIN, 175
-    END
-
-    IDD_OSMCTRL_OPERATIONS, DIALOG
-    BEGIN
-        LEFTMARGIN, 7
-        RIGHTMARGIN, 272
-        TOPMARGIN, 7
-        BOTTOMMARGIN, 143
-    END
-
-    IDD_GPS_SETTINGS, DIALOG
-    BEGIN
-        LEFTMARGIN, 7
-        RIGHTMARGIN, 238
-        TOPMARGIN, 7
-        BOTTOMMARGIN, 155
-    END
-
-    IDD_SEARCH_RESULTS, DIALOG
-    BEGIN
-        LEFTMARGIN, 7
-        RIGHTMARGIN, 306
-        TOPMARGIN, 7
-        BOTTOMMARGIN, 175
-    END
-
-    IDD_SEARCH, DIALOG
-    BEGIN
-        LEFTMARGIN, 7
-        RIGHTMARGIN, 320
-        TOPMARGIN, 7
-        BOTTOMMARGIN, 67
-    END
-
-    IDD_GOTO_COORDINATES, DIALOG
-    BEGIN
-        LEFTMARGIN, 7
-        RIGHTMARGIN, 208
-        TOPMARGIN, 7
-        BOTTOMMARGIN, 87
-    END
-END
-#endif    // APSTUDIO_INVOKED
 
 
 /////////////////////////////////////////////////////////////////////////////
@@ -754,7 +814,7 @@ BEGIN
                             "Use the Mapquest Open Aerial map provider"
 END
 
-#endif    // English (Ireland) resources
+#endif    // ”¢”Ô(∞Æ∂˚¿º) resources
 /////////////////////////////////////////////////////////////////////////////
 
 

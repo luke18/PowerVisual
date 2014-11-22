@@ -810,8 +810,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="enumser.cpp" />
+    <ClCompile Include="FunctionView.cpp" />
     <ClCompile Include="GotoCoordinatesDlg.cpp" />
     <ClCompile Include="GpsSettingsDlg.cpp" />
+    <ClCompile Include="InfoView.cpp" />
     <ClCompile Include="MainFrm.cpp" />
     <ClCompile Include="OSMCtrl.cpp" />
     <ClCompile Include="OSMCtrlApp.cpp" />
@@ -843,14 +845,17 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Unicode Release|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Unicode Release (GDI+)|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="TableView.cpp" />
     <ClCompile Include="TilePropertiesDlg.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cnominatim.h" />
     <ClInclude Include="enumser.h" />
+    <ClInclude Include="FunctionView.h" />
     <ClInclude Include="GotoCoordinatesDlg.h" />
     <ClInclude Include="GPSCom2Client.h" />
     <ClInclude Include="GpsSettingsDlg.h" />
+    <ClInclude Include="InfoView.h" />
     <ClInclude Include="MainFrm.h" />
     <ClInclude Include="MFCSensor.h" />
     <ClInclude Include="OSMCtrl.h" />
@@ -875,6 +880,7 @@
     <ClInclude Include="SearchDlg.h" />
     <ClInclude Include="SearchResultsDlg.h" />
     <ClInclude Include="stdafx.h" />
+    <ClInclude Include="TableView.h" />
     <ClInclude Include="TilePropertiesDlg.h" />
   </ItemGroup>
   <ItemGroup>

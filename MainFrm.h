@@ -1,4 +1,8 @@
 #pragma once
+#include "TableView.h"
+#include "InfoView.h"
+#include "FunctionView.h"
+//#include "OSMCtrlAppView.h"
 
 class CMainFrame : public CFrameWnd
 {
@@ -11,6 +15,11 @@ public:
 
 	// Implementation
 public:
+	CTableView *pTableView;
+	CInfoView *pInfoView;
+	CFunctionView *pFunctionView;
+	//COSMCtrlAppView *pMapView;
+
 	CSplitterWnd m_splitter;
 	CSplitterWnd m_splitter2;
 	CSplitterWnd m_splitter3;
