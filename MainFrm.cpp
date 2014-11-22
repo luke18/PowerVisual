@@ -123,7 +123,7 @@ void CMainFrame::OnUpdatePosition(CCmdUI* pCmdUI)
       int nLongitudeS = static_cast<int>((fAbsLongitude - nLongitudeD - nLongitudeM/60.0) * 3600);
       TCHAR* pszLongitudeType = (position.m_fLongitude > 0) ? _T("E") : _T("W");
       
-      sPosition.Format(_T("Position: %d° %d' %d\" %s  %d° %d' %d\" %s"), nLatitudeD, nLatitudeM, nLatitudeS, pszLatitudeType, nLongitudeD, nLongitudeM, nLongitudeS, pszLongitudeType); 
+      sPosition.Format(_T("Position: %d?%d' %d\" %s  %d?%d' %d\" %s"), nLatitudeD, nLatitudeM, nLatitudeS, pszLatitudeType, nLongitudeD, nLongitudeM, nLongitudeS, pszLongitudeType); 
       m_wndStatusBar.SetPaneText(m_wndStatusBar.CommandToIndex(ID_INDICATOR_POSITION), sPosition);
     }
     else
@@ -229,7 +229,7 @@ void CMainFrame::OnUpdateLength(CCmdUI* pCmdUI)
       {
         int nBearingD = static_cast<int>(dBearing);
         int nBearingM = static_cast<int>((dBearing - nBearingD) * 60);
-        sDetails.Format(_T("Length: %s, Bearing: %d° %d'"), sDistance.operator LPCTSTR(), nBearingD, nBearingM); 
+        sDetails.Format(_T("Length: %s, Bearing: %d?%d'"), sDistance.operator LPCTSTR(), nBearingD, nBearingM); 
       }
       else
         sDetails.Format(_T("Length: %s, Bearing: N/A"), sDistance.operator LPCTSTR()); 
@@ -242,4 +242,28 @@ void CMainFrame::OnUpdateLength(CCmdUI* pCmdUI)
   else
     m_wndStatusBar.SetPaneText(m_wndStatusBar.CommandToIndex(ID_INDICATOR_LENGTH), _T("Length: N/A, Bearing: N/A"));
   pCmdUI->Enable(TRUE);
+}
+
+BOOL CMainFrame::OnCreateClient(LPCREATESTRUCT lpcs, CCreateContext* pContext)
+{
+	// TODO: Add your specialized code here and/or call the base class
+
+	//´´½¨Ò»¸ö¾²Ì¬·ÖÀ¸´°¿Ú£¬·ÖÎªÒ»ÐÐ¶þÁÐ 
+	if (m_splitter.CreateStatic(this, 1, 2) == NULL)
+		return FALSE;
+	CRect rect;
+	GetClientRect(&rect);
+	//½«CFormCommandÁ¬½Óµ½0ÐÐ0ÁÐ´°¸ñÉÏ
+	//m_splitter.CreateView(0,0,RUNTIME_CLASS(CFormCommandView),CSize(200,200),pContext); 
+	//½«CMyGameViewÁ¬½Óµ½0ÐÐ1ÁÐ´°¸ñÉÏ
+	m_splitter.CreateView(0, 1, RUNTIME_CLASS(COSMCtrlAppView), CSize(rect.Width() / 5, rect.Height()), pContext);
+	m_splitter2.CreateStatic(&m_splitter, 1, 2, WS_CHILD | WS_VISIBLE, m_splitter.IdFromRowCol(0, 0));
+	m_splitter2.CreateView(0, 0, RUNTIME_CLASS(COSMCtrlAppView), CSize(rect.Width() / 5, rect.Height()), pContext);
+	m_splitter3.CreateStatic(&m_splitter2, 2, 1, WS_CHILD | WS_VISIBLE, m_splitter2.IdFromRowCol(0, 1));
+	m_splitter3.CreateView(0, 0, RUNTIME_CLASS(COSMCtrlAppView), CSize(rect.Width()*0.6, rect.Height() / 3), pContext);
+	m_splitter3.CreateView(1, 0, RUNTIME_CLASS(COSMCtrlAppView), CSize(rect.Width()*0.6, rect.Height() * 2 / 3), pContext);
+
+	return TRUE;
+
+	return CFrameWnd::OnCreateClient(lpcs, pContext);
 }

@@ -3,30 +3,35 @@
 class CMainFrame : public CFrameWnd
 {
 protected: // create from serialization only
-  CMainFrame();
-  DECLARE_DYNCREATE(CMainFrame)
+	CMainFrame();
+	DECLARE_DYNCREATE(CMainFrame)
 
 public:
-  virtual BOOL PreCreateWindow(CREATESTRUCT& cs);
+	virtual BOOL PreCreateWindow(CREATESTRUCT& cs);
 
-// Implementation
+	// Implementation
 public:
-  virtual ~CMainFrame();
+	CSplitterWnd m_splitter;
+	CSplitterWnd m_splitter2;
+	CSplitterWnd m_splitter3;
+	virtual ~CMainFrame();
+
 #ifdef _DEBUG
-  virtual void AssertValid() const;
-  virtual void Dump(CDumpContext& dc) const;
+	virtual void AssertValid() const;
+	virtual void Dump(CDumpContext& dc) const;
 #endif
 
 protected:  // control bar embedded members
-  CStatusBar  m_wndStatusBar;
-  CToolBar    m_wndToolBar;
+	CStatusBar  m_wndStatusBar;
+	CToolBar    m_wndToolBar;
 
-// Generated message map functions
+	// Generated message map functions
 protected:
-  afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
-  afx_msg void OnUpdatePosition(CCmdUI* pCmdUI);
-  afx_msg void OnUpdateLength(CCmdUI* pCmdUI);
-  DECLARE_MESSAGE_MAP()
+	virtual BOOL OnCreateClient(LPCREATESTRUCT lpcs, CCreateContext* pContext);
+	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
+	afx_msg void OnUpdatePosition(CCmdUI* pCmdUI);
+	afx_msg void OnUpdateLength(CCmdUI* pCmdUI);
+	DECLARE_MESSAGE_MAP()
 };
 
 
