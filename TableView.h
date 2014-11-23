@@ -1,6 +1,6 @@
 #pragma once
 #include "ChartCtrl\ChartCtrl.h"
-#include "E:\Research\Collections\1410UgInovation\Simulation\PowerVisual\ChartCtrl\ChartCtrl.h"
+#include "ChartCtrl\ChartCtrl.h"
 
 
 // CTableView ¥∞ÃÂ ”Õº
