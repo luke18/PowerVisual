@@ -19,15 +19,12 @@
 #define IDS_OSMCTRL_TILE_NOT_AVAILABLE  133
 #define IDD_GOTO_COORDINATES            133
 #define IDS_OSMCTRL_NO_VALID_SELECTION  134
-#define IDD_FORMVIEW                    134
 #define IDS_OSMCTRL_TILE_NOT_AVAILABLE2 135
 #define IDS_OSMCTRL_MAP_OPERATIONS_UPDATE_ZOOM3 136
 #define IDS_OSMCTRL_MAP_OPERATIONS_UPDATE_ZOOM2 137
 #define IDS_CLICK_ON_MAP_FOR_REFRESHTILE 138
-#define IDD_FORMVIEW1                   138
 #define IDS_OSMCTRL_DELETE_FILES_STATS  139
 #define IDS_OSMCTRL_DOWNLOAD_TILES_STATS 140
-#define IDD_FORMVIEW2                   140
 #define IDS_OSMCTRL_RERENDER_TILES_STATS 141
 #define IDS_OSMCTRL_COPYRIGHT           142
 #define IDS_NO_GPS_PORT                 143
@@ -37,6 +34,9 @@
 #define IDS_FAIL_NOMINATIM_SEARCH       147
 #define IDS_NOMINATIM_SEARCH_NO_RESULTS 148
 #define IDS_CLICK_ON_MAP_FOR_TILEPROPERTIES 149
+#define IDD_FORMVIEW                    150
+#define IDD_FORMVIEW1                   151
+#define IDD_FORMVIEW2                   152
 #define IDC_URL                         1000
 #define IDC_PROVIDER                    1001
 #define IDC_CACHE_PATH                  1002
@@ -69,6 +69,7 @@
 #define IDC_LATITUDE_DEGREES            1025
 #define IDC_LATITUDE_MINUTES            1026
 #define IDC_LATITUDE_SECONDS            1027
+#define IDC_CUSTOM1                     1028
 #define ID_ZOOM_0                       32772
 #define ID_ZOOM_1                       32773
 #define ID_ZOOM_2                       32774
@@ -133,9 +134,9 @@
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        141
+#define _APS_NEXT_RESOURCE_VALUE        153
 #define _APS_NEXT_COMMAND_VALUE         32854
-#define _APS_NEXT_CONTROL_VALUE         1023
+#define _APS_NEXT_CONTROL_VALUE         1029
 #define _APS_NEXT_SYMED_VALUE           104
 #endif
 #endif

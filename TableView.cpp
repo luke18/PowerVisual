@@ -23,6 +23,7 @@ CTableView::~CTableView()
 void CTableView::DoDataExchange(CDataExchange* pDX)
 {
 	CFormView::DoDataExchange(pDX);
+	DDX_Control(pDX, IDC_CUSTOM1, m_ChartCtrl1);
 }
 
 BEGIN_MESSAGE_MAP(CTableView, CFormView)

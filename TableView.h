@@ -1,5 +1,6 @@
 #pragma once
-
+#include "ChartCtrl\ChartCtrl.h"
+#include "E:\Research\Collections\1410UgInovation\Simulation\PowerVisual\ChartCtrl\ChartCtrl.h"
 
 
 // CTableView 窗体视图
@@ -25,6 +26,8 @@ protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV 支持
 
 	DECLARE_MESSAGE_MAP()
+public:
+	CChartCtrl m_ChartCtrl1;
 };
 
 
