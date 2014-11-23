@@ -5201,10 +5201,10 @@ void COSMCtrl::HandleLButtonDblClickMarker(UINT /*nFlags*/, CPoint /*point*/, Ma
   //Nothing to do
 }
 
-void COSMCtrl::HandleLButtonDblClickCircle(UINT /*nFlags*/, CPoint /*point*/, MapItem /*item*/, INT_PTR /*nItem*/, INT_PTR /*nSubItem*/)
-{
-  //Nothing to do
-}
+//void COSMCtrl::HandleLButtonDblClickCircle(UINT /*nFlags*/, CPoint /*point*/, MapItem /*item*/, INT_PTR /*nItem*/, INT_PTR /*nSubItem*/)
+//{
+//  //Nothing to do
+//}
 
 void COSMCtrl::HandleLButtonDblClickPolyline(UINT /*nFlags*/, CPoint /*point*/, MapItem /*item*/, INT_PTR nItem, INT_PTR /*nSubItem*/)
 {

@@ -2512,3 +2512,9 @@ int COSMCtrlAppView::FindBusNumByI(double bus_i, std::vector<StationStruct> m_St
 	}
 	return busNum;
 }
+
+// This is moved from COSMCtrl.cpp
+void COSMCtrl::HandleLButtonDblClickCircle(UINT /*nFlags*/, CPoint /*point*/, MapItem /*item*/, INT_PTR /*nItem*/, INT_PTR /*nSubItem*/)
+{
+	//Nothing to do
+}
