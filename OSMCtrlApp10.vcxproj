@@ -848,6 +848,7 @@
     <ClCompile Include="OSMCtrlPolyline.cpp" />
     <ClCompile Include="OSMCtrlPosition.cpp" />
     <ClCompile Include="OSMCtrlTimerEventHandler.cpp" />
+    <ClCompile Include="OSMMyStruct.cpp" />
     <ClCompile Include="SearchDlg.cpp" />
     <ClCompile Include="SearchResultsDlg.cpp" />
     <ClCompile Include="stdafx.cpp">
@@ -930,6 +931,7 @@
     <ClInclude Include="OSMCtrlPosition.h" />
     <ClInclude Include="OSMCtrlTileProviders.h" />
     <ClInclude Include="OSMCtrlTimerEventHandler.h" />
+    <ClInclude Include="OSMMyStruct.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="SearchDlg.h" />
     <ClInclude Include="SearchResultsDlg.h" />

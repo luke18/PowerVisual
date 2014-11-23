@@ -10,6 +10,27 @@
 #include "GotoCoordinatesDlg.h"
 
 
+#include "OSMMyStruct.h"
+#include <string>
+#include <sstream>
+#include <iostream>
+#include <vector>
+#include <fstream>
+#include <math.h>
+
+
+#ifdef COSMCTRL_NOWINHTTP //CNominatin currently only supports Wininet no WinHTTP
+#include "cnominatim.h" //If you get a compilation error about this missing header file, then you need to download my CNominatim class from http://www.naughter.com/nominatim.html
+#endif
+#include "SearchDlg.h"
+#ifdef COSMCTRL_NOWINHTTP
+#include "SearchResultsDlg.h"
+#endif
+#include "GotoCoordinatesDlg.h"
+
+//#include "libgodflow.h"
+//#include "FormCommandView.h"
+//#include "InfoView.h"
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
@@ -377,6 +398,87 @@ int COSMCtrlAppView::OnCreate(LPCREATESTRUCT lpCreateStruct)
   sDefault.Format(_T("%f"), centerPosition.m_fLatitude);
   sValue = pApp->GetProfileString(_T("General"), _T("LastLatitude"), sDefault);
   double dLatitude = _tstof(sValue);
+
+
+
+
+  using namespace std;
+  /* following codes read the csv file into doc*/
+  /*read in busdata*/
+  ifstream in("busdata.csv");
+  string line, field;
+  vector< vector<string> > busdataArray;  // the 2D array
+  vector<string> v;                // array of values for one line only
+
+  while (getline(in, line)) {  // get next line in file
+	  v.clear();
+	  stringstream ss(line);
+
+	  while (getline(ss, field, ',')) { // break line into comma delimitted fields
+		  v.push_back(field);  // add each field to the 1D array
+	  }
+
+	  busdataArray.push_back(v);  // add the 1D array to the 2D array
+  }
+  in.close();
+
+  ifstream in1("branchdata.csv");
+  vector< vector<string> > branchdataArray;  // the 2D array
+  //vector<string> v;                // array of values for one line only
+
+  while (getline(in1, line)) {  // get next line in file
+	  v.clear();
+	  stringstream ss(line);
+
+	  while (getline(ss, field, ',')) { // break line into comma delimitted fields
+		  v.push_back(field);  // add each field to the 1D array
+	  }
+
+	  branchdataArray.push_back(v);  // add the 1D array to the 2D array
+  }
+  in1.close();
+
+  COSMCtrlAppDoc *pDoc = GetDocument();
+  /*put bus data*/
+  StationStruct station;
+  int bussize = busdataArray.size();
+  for (int i = 1; i < bussize; i++)
+  {
+
+	  station.busName = busdataArray[i][0].c_str();
+	  station.bus_i = atof(busdataArray[i][3].c_str());
+	  station.longitude = atof(busdataArray[i][1].c_str());
+	  station.latitude = atof(busdataArray[i][2].c_str());
+	  station.volGrade = atof(busdataArray[i][4].c_str());
+	  station.capacity = atof(busdataArray[i][5].c_str());
+	  pDoc->m_Stations.push_back(station);
+  }
+  /*end put bus data*/
+
+  /* put branch data*/
+  BranchStruct branch;
+  for (int i = 1; i < branchdataArray.size(); i++)
+  {
+	  branch.fbus = atof(branchdataArray[i][0].c_str());
+	  branch.tbus = atof(branchdataArray[i][1].c_str());
+	
+	  branch.volGrade = atof(branchdataArray[i][2].c_str());
+	  branch.startBus = FindBusNumByI(branch.fbus, pDoc->m_Stations);
+	  branch.endBus = FindBusNumByI(branch.tbus, pDoc->m_Stations);
+	  branch.carbonAddTest = FALSE;
+	  pDoc->m_Branchs.push_back(branch);
+  }
+  UpdateStations(40);
+  /* end put branch data*/
+  /*end put data into doc*/
+
+
+ // CString strarray;
+
+
+
+
+
 #ifndef COSMCTRL_NOD2D
   sDefault.Format(_T("%f"), m_ctrlOSM.GetBearingOfTopOfMap());
   sValue = pApp->GetProfileString(_T("General"), _T("LastBearingAtTopOfMap"), sDefault);
@@ -2152,4 +2254,261 @@ void COSMCtrlAppView::OnRMC(const CString& /*sSentence*/, const GPSCom2::CRMCSen
       m_sLastTrackLogFilename = sTrackLogFilename;
     }
   }
+}
+
+//every time draw the visualization, circle R relates to pdpower
+void COSMCtrlAppView::UpdateStations(int timeNumber)
+{
+	CString tooltips;
+	m_ctrlOSM.m_Markers.clear();
+	m_ctrlOSM.m_Polylines.clear();
+	m_ctrlOSM.m_Circles.clear();
+	m_ctrlOSM.m_Polygons.clear();
+	pDoc = GetDocument();
+	int busSize = pDoc->m_Stations.size(); // get size of array in doc
+	int branchSize = pDoc->m_Branchs.size();
+	BranchStruct branch;
+
+	/*draw circle for bus*/
+	for (int i = 0; i<busSize; i++) {
+		StationStruct station;
+		station = pDoc->m_Stations[i];
+		//if (station.kind == 1)
+		//	continue;
+		COSMCtrlCircle sampleCircle, sampleCircle2;
+
+		sampleCircle.m_Position = COSMCtrlPosition(station.longitude, station.latitude);
+		//sampleCircle.m_fRadius = (station.pdPower[timeNumber]*10);
+		sampleCircle.m_fRadius = 300 * (log(station.capacity + 2));
+		//sampleCircle.m_fRadius = 30000;
+		sampleCircle.relatedBus = i;
+		if (station.volGrade == 220)
+		{
+#ifdef COSMCTRL_NOD2D
+			sampleCircle.m_colorBrush = Gdiplus::Color(0, 0, 128);
+#else
+			sampleCircle.m_colorBrush = D2D1::ColorF(0, 0, 1, 50);
+#endif
+			sampleCircle.m_nMinZoomLevel = 0;
+		}
+		else if (station.volGrade == 110)
+		{
+#ifdef COSMCTRL_NOD2D
+			sampleCircle.m_colorBrush = Gdiplus::Color(200, 0, 0);
+#else
+			sampleCircle.m_colorBrush = D2D1::ColorF(200, 0, 0, 50);
+#endif
+			sampleCircle.m_nMinZoomLevel = 0;
+		}
+		else if (station.volGrade == 35)
+		{
+#ifdef COSMCTRL_NOD2D
+			sampleCircle.m_colorBrush = Gdiplus::Color(200, 128, 0);
+#else
+			sampleCircle.m_colorBrush = D2D1::ColorF(200, 128, 0, 50);
+#endif
+			sampleCircle.m_nMinZoomLevel = 0;
+		}
+#ifdef COSMCTRL_NOD2D
+		sampleCircle.m_DashStyle = Gdiplus::DashStyleDashDot;
+		sampleCircle.m_colorPen = Gdiplus::Color(255, 69, 0);
+#else
+		sampleCircle.m_DashStyle = D2D1_DASH_STYLE_DASH;
+		//sampleCircle.m_colorPen = D2D1::ColorF(0,0,0);
+#endif
+		sampleCircle.m_fLinePenWidth = 0.1;
+		if (i == 0 || i == 1)
+		{
+			sampleCircle.m_colorPen = D2D1::ColorF(254, 0, 0);
+			sampleCircle.m_fLinePenWidth = 3;
+		}
+		else if (i == 77 || i == 78 || i == 80 || i == 79)
+		{
+			sampleCircle.m_colorPen = D2D1::ColorF(0, 254, 0);
+			sampleCircle.m_fLinePenWidth = 3;
+		}
+		sampleCircle.m_nMaxZoomLevel = 18;
+		//CString tooltips;
+		//tooltips.Format(_T("%d"), station.busNumber);
+		sampleCircle.m_sToolTipText.Format(_T("Name: %s, CR: %f"), station.busName, 0);
+		sampleCircle.m_bDraggable = FALSE; //Allow the circle to be draggable
+		sampleCircle.m_bEditable = TRUE; //Allow the circle to be editable
+		m_ctrlOSM.m_Circles.push_back(sampleCircle);
+		/*end capacity circle*/
+		/*real part of station
+		sampleCircle2.m_Position = COSMCtrlPosition(station.longitude, station.latitude);
+		//sampleCircle2.m_fRadius = (station.pdPower[timeNumber]*10);
+		double tmpladoddddd = station.loadP[currentTimeInt];
+		sampleCircle2.m_fRadius = 300*(log(station.loadP[currentTimeInt]+2));
+		sampleCircle2.relatedBus = i;
+
+		if(station.volGrade == 220)
+		{
+		#ifdef COSMCTRL_NOD2D
+		sampleCircle2.m_colorBrush = Gdiplus::Color(0,0,220);
+		#else
+		sampleCircle2.m_colorBrush = D2D1::ColorF(0,0,220,64);
+		#endif
+		sampleCircle2.m_nMinZoomLevel = 0;
+		}
+		else if (station.volGrade == 110)
+		{
+		#ifdef COSMCTRL_NOD2D
+		sampleCircle2.m_colorBrush = Gdiplus::Color(230,0,0);
+		#else
+		sampleCircle2.m_colorBrush = D2D1::ColorF(230,0,0,64);
+		#endif
+		sampleCircle2.m_nMinZoomLevel = 0;
+		}
+		else if (station.volGrade == 35)
+		{
+		#ifdef COSMCTRL_NOD2D
+		sampleCircle2.m_colorBrush = Gdiplus::Color(230,128,0);
+		#else
+		sampleCircle2.m_colorBrush = D2D1::ColorF(230,128,0,64);
+		#endif
+		sampleCircle2.m_nMinZoomLevel = 18;
+		}
+		#ifdef COSMCTRL_NOD2D
+		sampleCircle2.m_DashStyle = Gdiplus::DashStyleDashDot;
+		sampleCircle2.m_colorPen = Gdiplus::Color(255,69,0);
+		#else
+		sampleCircle2.m_DashStyle = D2D1_DASH_STYLE_DASH;
+		sampleCircle2.m_colorPen = D2D1::ColorF(255,255,255);
+		#endif
+		sampleCircle2.m_fLinePenWidth = 2;
+
+		if (station.loadP[currentTimeInt] > station.capacity)
+		{
+		sampleCircle2.m_DashStyle = D2D1_DASH_STYLE_DASH;
+		sampleCircle2.m_colorPen = D2D1::ColorF(255,0,0);
+		sampleCircle2.m_fLinePenWidth = 5;
+		}
+
+		sampleCircle2.m_nMaxZoomLevel = 18;
+		//CString tooltips;
+		//tooltips.Format(_T("%d"), station.busNumber);
+		sampleCircle2.m_sToolTipText.Format( _T("Name: %s, CR: %f"), station.busName, station.carbonRatio);
+		sampleCircle2.m_bDraggable = FALSE; //Allow the circle to be draggable
+		sampleCircle2.m_bEditable = TRUE; //Allow the circle to be editable
+		m_ctrlOSM.m_Circles.Add(sampleCircle2);
+		*/
+		/*end real power circle*/
+	}
+	/*end draw circle for bus*/
+
+	//m_ctrlOSM.m_Circles.GetAt(selectedNum).m_bSelected = TRUE;
+
+	/*begin draw line for branch*/
+	for (int i = 0; i<81; i++)
+	for (int j = 0; j<81; j++)
+		busBranchArray[i][j] = 0;
+	for (int i = 0; i < branchSize; i++)
+	{
+		branch = pDoc->m_Branchs[i];
+		//int startBus, endBus;
+		//branch.startBus = FindBusNumByI(branch.fbus, pDoc->m_Stations);
+		//branch.endBus = FindBusNumByI(branch.tbus, pDoc->m_Stations);
+		StationStruct station1;
+		StationStruct station2;
+		station1 = pDoc->m_Stations[branch.startBus];
+		station2 = pDoc->m_Stations[branch.endBus];
+		//pDoc->m_Stations.GetStation(startBus-1,&station1);
+		//pDoc->m_Stations.GetStation(endBus-1,&station2);
+		int bst, bend;
+		bst = branch.startBus;
+		bend = branch.endBus;
+		if ((busBranchArray[bst][ bend ] == 0 && branch.startBus != branch.endBus))
+		{
+			COSMCtrlPolyline samplePolyline;
+			COSMCtrlNode tempPosition(station1.longitude, station1.latitude);
+			samplePolyline.m_Nodes.push_back(tempPosition);
+			tempPosition = COSMCtrlNode(station2.longitude, station2.latitude);
+			samplePolyline.m_Nodes.push_back(tempPosition);
+			samplePolyline.m_fDashOffset = 3;
+
+			samplePolyline.relatedBranch = i;
+
+			//if ((branch.startBus > 10 && branch.startBus < 76) || (branch.endBus > 10) && branch.endBus <76) {
+			//	samplePolyline.m_nMinZoomLevel = 18;
+			//	samplePolyline.m_nMaxZoomLevel = 18;
+			//}
+		//	else
+			{
+				samplePolyline.m_nMinZoomLevel = 0;
+				samplePolyline.m_nMaxZoomLevel = 18;
+			}
+			samplePolyline.m_sToolTipText.Format(_T("From: %d, To: %d, FromP: %f, CF: %f"), pDoc->m_Branchs[i].startBus, pDoc->m_Branchs[i].endBus, 0, 0);
+			samplePolyline.m_bDraggable = FALSE; //Allow the polyline to be draggable
+			samplePolyline.m_bEditable = TRUE; //Allow the polyline to be edited
+			samplePolyline.m_fLinePenWidth = 1;
+			if (branch.volGrade == 220)
+				samplePolyline.m_colorPen = RGB(0, 0, 128);
+			else if (branch.volGrade == 110)
+				samplePolyline.m_colorPen = RGB(128, 0, 0);
+			else if (branch.volGrade == 35)
+				samplePolyline.m_colorPen = RGB(200, 128, 0);
+
+			m_ctrlOSM.m_Polylines.push_back(samplePolyline);
+		}
+		busBranchArray[int(branch.startBus)][int(branch.endBus)] += 1;
+	}
+	/*end draw line for branch*/
+
+	//draw arrow for branch
+	COSMCtrlPolyline lineOnDraw;
+	int polylineSize = m_ctrlOSM.m_Polylines.size();
+	for (int i = 0; i<polylineSize; i++)
+	{
+		lineOnDraw = m_ctrlOSM.m_Polylines.at(i);
+		branch = pDoc->m_Branchs[lineOnDraw.relatedBranch];
+		//BranchVisual(branch, currentTimeInt);
+	}
+
+	//draw marker for elec
+	
+	/*draw marker for vehicle
+	COSMCtrlMarker eVMarker;
+	eVMarker.m_Position = COSMCtrlPosition(pDoc->Vehicle.longitude,pDoc->Vehicle.latitude);
+	eVMarker.m_sToolTipText = pDoc->Vehicle.busName;
+	eVMarker.m_nIconIndex = m_nDefaultMarkerIconIndex;
+	eVMarker.m_nMinZoomLevel =11;
+	eVMarker.m_nMaxZoomLevel = 18;
+	eVMarker.m_bDraggable = TRUE; //Allow the marker to be draggable
+	m_ctrlOSM.m_Markers.Add(eVMarker);
+
+	COSMCtrlPolyline eBLine;
+	COSMCtrlNode tempPosition (pDoc->Vehicle.longitude, pDoc->Vehicle.latitude);
+	eBLine.m_Nodes.Add(tempPosition);
+	tempPosition = COSMCtrlNode(pDoc->m_Stations[15].longitude, pDoc->m_Stations[15].latitude);
+	eBLine.m_Nodes.Add(tempPosition);
+	eBLine.m_fDashOffset = 3;
+
+	eBLine.m_nMinZoomLevel = 11;
+	eBLine.m_nMaxZoomLevel = 18;
+	eBLine.m_sToolTipText = _T("Line");
+	eBLine.m_bDraggable = FALSE; //Allow the polyline to be draggable
+	eBLine.m_bEditable = TRUE; //Allow the polyline to be edited
+	eBLine.m_fLinePenWidth = 1;
+	m_ctrlOSM.m_Polylines.Add(eBLine);
+
+	end draw marker for vehicle*/
+}
+
+
+int COSMCtrlAppView::FindBusNumByI(double bus_i, std::vector<StationStruct> m_Stations)
+{
+	double fatherNum;
+	int busNum;
+	for (int i = 0; i<m_Stations.size(); i++)
+	{
+		if (m_Stations[i].bus_i == bus_i)
+		{
+			
+					busNum = i;
+
+			break;
+		}
+	}
+	return busNum;
 }

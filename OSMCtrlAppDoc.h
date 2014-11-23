@@ -1,15 +1,17 @@
 #pragma once
-
+#include "OSMMyStruct.h"
+#include <vector>
+#include <string>
 
 class COSMCtrlAppDoc : public CDocument
 {
 protected: // create from serialization only
 	COSMCtrlAppDoc();
 	DECLARE_DYNCREATE(COSMCtrlAppDoc)
-
 // Attributes
 public:
-
+	std::vector<StationStruct> m_Stations;
+	std::vector<BranchStruct> m_Branchs;
 // Operations
 public:
 

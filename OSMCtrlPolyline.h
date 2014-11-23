@@ -65,6 +65,7 @@ public:
 //Member variables
   std::vector<COSMCtrlNode>           m_Nodes;                //The array of position for this polyline
   float                               m_fLinePenWidth;        //The width of the line to draw
+  double							  relatedBranch;
 #ifdef COSMCTRL_NOD2D
   Gdiplus::Color                      m_colorPen;             //The color of the pen to use
   Gdiplus::Color                      m_colorNode;            //The color of the node
