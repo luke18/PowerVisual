@@ -2,7 +2,7 @@
 #include "TableView.h"
 #include "InfoView.h"
 #include "FunctionView.h"
-//#include "OSMCtrlAppView.h"
+#include "OSMCtrlAppView.h"
 
 class CMainFrame : public CFrameWnd
 {
@@ -18,7 +18,7 @@ public:
 	CTableView *pTableView;
 	CInfoView *pInfoView;
 	CFunctionView *pFunctionView;
-	//COSMCtrlAppView *pMapView;
+	COSMCtrlAppView *pMapView;
 
 	CSplitterWnd m_splitter;
 	CSplitterWnd m_splitter2;

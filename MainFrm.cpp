@@ -264,7 +264,7 @@ BOOL CMainFrame::OnCreateClient(LPCREATESTRUCT lpcs, CCreateContext* pContext)
 	m_splitter3.CreateView(1, 0, RUNTIME_CLASS(COSMCtrlAppView), CSize(rect.Width()*0.6, rect.Height() * 2 / 3), pContext);
 
 	pTableView = (CTableView*)m_splitter3.GetPane(0, 0);
-	//pMapView = (COSMCtrlAppView*)m_splitter3.GetPane(1, 0);
+	pMapView = (COSMCtrlAppView*)m_splitter3.GetPane(1, 0);
 	pInfoView = (CInfoView*)m_splitter.GetPane(0, 1);
 	pFunctionView = (CFunctionView*)m_splitter2.GetPane(0, 0);
 

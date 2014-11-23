@@ -4,6 +4,7 @@
 #include "GPSCom2Client.h" //If you get a compilation error about this missing header file, then you need to download my GPSCom2 classes from http://www.naughter.com/gpscom2.html
 #include "OSMCtrlGPX.h"
 #include "OSMCtrlTileProviders.h"
+#include "OSMCtrlAppDoc.h"
 #include "MFCSensor.h" //If you get a compilation error about this missing header file, then you need to download my MFCSensor code from http://www.naughter.com/mfcsensor.html
 
 
