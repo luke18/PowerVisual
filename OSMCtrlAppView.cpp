@@ -452,6 +452,12 @@ int COSMCtrlAppView::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	  loadArray.push_back(v);  // add the 1D array to the 2D array
   }
   in2.close();
+  for (int i = 0; i < 24; i++)
+  {
+	  m_allload[i] = 0;
+	  for (int j = 1; j < loadArray.size(); ++j)
+		  m_allload[i] += atof(loadArray[j][i].c_str());
+  }
   COSMCtrlAppDoc *pDoc = GetDocument();
   /*put bus data*/
   StationStruct station;

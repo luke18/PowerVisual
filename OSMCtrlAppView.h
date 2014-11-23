@@ -31,6 +31,7 @@ public:
   COSMCtrlAppDoc*pDoc;
   COSMCtrl& GetCtrl() { return m_ctrlOSM; };
   double m_load[24];
+  double m_allload[24];
   int currentTimeInt;
   void SearchLoad(int);
 // Operations
