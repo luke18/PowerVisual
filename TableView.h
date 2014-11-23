@@ -28,6 +28,9 @@ protected:
 	DECLARE_MESSAGE_MAP()
 public:
 	CChartCtrl m_ChartCtrl1;
+	virtual void OnInitialUpdate();
+	// Draw line graph from given time and load array
+	void DrawLineGraph(int dataNum, double *time, double *load);
 };
 
 
