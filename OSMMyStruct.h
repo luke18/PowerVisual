@@ -12,7 +12,10 @@ struct StationStruct
 	double latitude;
 	double bus_i;
 	double volGrade;
-	double capacity;
+	double father;
+	double pd_max;
+	double load[24];
+
 };
 struct BranchStruct
 {
