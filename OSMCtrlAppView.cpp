@@ -438,6 +438,20 @@ int COSMCtrlAppView::OnCreate(LPCREATESTRUCT lpCreateStruct)
   }
   in1.close();
 
+  ifstream in2("load_profile.csv");
+  vector< vector<string> > loadArray;  // the 2D array
+  //vector<string> v;                // array of values for one line only
+
+  while (getline(in2, line)) {  // get next line in file
+	  v.clear();
+	  stringstream ss(line);
+
+	  while (getline(ss, field, ',')) { // break line into comma delimitted fields
+		  v.push_back(field);  // add each field to the 1D array
+	  }
+	  loadArray.push_back(v);  // add the 1D array to the 2D array
+  }
+  in2.close();
   COSMCtrlAppDoc *pDoc = GetDocument();
   /*put bus data*/
   StationStruct station;
@@ -449,8 +463,21 @@ int COSMCtrlAppView::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	  station.bus_i = atof(busdataArray[i][3].c_str());
 	  station.longitude = atof(busdataArray[i][1].c_str());
 	  station.latitude = atof(busdataArray[i][2].c_str());
-	  station.volGrade = atof(busdataArray[i][4].c_str());
-	  station.capacity = atof(busdataArray[i][5].c_str());
+	  station.volGrade = atof(busdataArray[i][5].c_str());
+	  station.father = atof(busdataArray[i][6].c_str());
+	  station.pd_max = atof(busdataArray[i][4].c_str());
+	  int mm;
+	  mm = -1;
+	  for (int k = 1; k < loadArray.size(); ++k)
+	  if (station.bus_i == atof(loadArray[k][0].c_str()))
+	  {
+		  mm = k;
+		  break;
+	  }
+	  for (int k = 0; k < 24; ++k)
+	  if ( mm != -1)
+		  station.load[k] = station.pd_max*atof(loadArray[mm][k].c_str());
+	  else station.load[k] = 0;
 	  pDoc->m_Stations.push_back(station);
   }
   /*end put bus data*/
@@ -461,10 +488,12 @@ int COSMCtrlAppView::OnCreate(LPCREATESTRUCT lpCreateStruct)
   {
 	  branch.fbus = atof(branchdataArray[i][0].c_str());
 	  branch.tbus = atof(branchdataArray[i][1].c_str());
-	
-	  branch.volGrade = atof(branchdataArray[i][2].c_str());
 	  branch.startBus = FindBusNumByI(branch.fbus, pDoc->m_Stations);
 	  branch.endBus = FindBusNumByI(branch.tbus, pDoc->m_Stations);
+	  if (pDoc->m_Stations[branch.startBus].volGrade > pDoc->m_Stations[branch.endBus].volGrade)
+		  branch.volGrade = pDoc->m_Stations[branch.endBus].volGrade;
+	  else
+		  branch.volGrade = pDoc->m_Stations[branch.startBus].volGrade;
 	  branch.carbonAddTest = FALSE;
 	  pDoc->m_Branchs.push_back(branch);
   }
@@ -2273,13 +2302,13 @@ void COSMCtrlAppView::UpdateStations(int timeNumber)
 	for (int i = 0; i<busSize; i++) {
 		StationStruct station;
 		station = pDoc->m_Stations[i];
-		//if (station.kind == 1)
-		//	continue;
+		if (station.bus_i != station.father)
+			continue;
 		COSMCtrlCircle sampleCircle, sampleCircle2;
 
 		sampleCircle.m_Position = COSMCtrlPosition(station.longitude, station.latitude);
 		//sampleCircle.m_fRadius = (station.pdPower[timeNumber]*10);
-		sampleCircle.m_fRadius = 300 * (log(station.capacity + 2));
+		sampleCircle.m_fRadius = 15 * station.volGrade;
 		//sampleCircle.m_fRadius = 30000;
 		sampleCircle.relatedBus = i;
 		if (station.volGrade == 220)
@@ -2290,6 +2319,7 @@ void COSMCtrlAppView::UpdateStations(int timeNumber)
 			sampleCircle.m_colorBrush = D2D1::ColorF(0, 0, 1, 50);
 #endif
 			sampleCircle.m_nMinZoomLevel = 0;
+			sampleCircle.m_nMaxZoomLevel = 11;
 		}
 		else if (station.volGrade == 110)
 		{
@@ -2298,7 +2328,8 @@ void COSMCtrlAppView::UpdateStations(int timeNumber)
 #else
 			sampleCircle.m_colorBrush = D2D1::ColorF(200, 0, 0, 50);
 #endif
-			sampleCircle.m_nMinZoomLevel = 0;
+			sampleCircle.m_nMinZoomLevel = 9;
+			sampleCircle.m_nMaxZoomLevel = 11;
 		}
 		else if (station.volGrade == 35)
 		{
@@ -2307,7 +2338,18 @@ void COSMCtrlAppView::UpdateStations(int timeNumber)
 #else
 			sampleCircle.m_colorBrush = D2D1::ColorF(200, 128, 0, 50);
 #endif
-			sampleCircle.m_nMinZoomLevel = 0;
+			sampleCircle.m_nMinZoomLevel = 10;
+			sampleCircle.m_nMaxZoomLevel = 12;
+		}
+		else if (station.volGrade == 10)
+		{
+#ifdef COSMCTRL_NOD2D
+			sampleCircle.m_colorBrush = Gdiplus::Color(0, 0, 225);
+#else
+			sampleCircle.m_colorBrush = D2D1::ColorF(0, 0, 225, 50);
+#endif
+			sampleCircle.m_nMinZoomLevel = 12;
+			sampleCircle.m_nMaxZoomLevel = 16;
 		}
 #ifdef COSMCTRL_NOD2D
 		sampleCircle.m_DashStyle = Gdiplus::DashStyleDashDot;
@@ -2327,7 +2369,7 @@ void COSMCtrlAppView::UpdateStations(int timeNumber)
 			sampleCircle.m_colorPen = D2D1::ColorF(0, 254, 0);
 			sampleCircle.m_fLinePenWidth = 3;
 		}
-		sampleCircle.m_nMaxZoomLevel = 18;
+		//sampleCircle.m_nMaxZoomLevel = 18;
 		//CString tooltips;
 		//tooltips.Format(_T("%d"), station.busNumber);
 		sampleCircle.m_sToolTipText.Format(_T("Name: %s, CR: %f"), station.busName, 0);
@@ -2400,8 +2442,9 @@ void COSMCtrlAppView::UpdateStations(int timeNumber)
 	//m_ctrlOSM.m_Circles.GetAt(selectedNum).m_bSelected = TRUE;
 
 	/*begin draw line for branch*/
-	for (int i = 0; i<81; i++)
-	for (int j = 0; j<81; j++)
+	double busBranchArray[200][200];
+	for (int i = 0; i<busSize+1; i++)
+	for (int j = 0; j<busSize+1; j++)
 		busBranchArray[i][j] = 0;
 	for (int i = 0; i < branchSize; i++)
 	{
@@ -2434,10 +2477,27 @@ void COSMCtrlAppView::UpdateStations(int timeNumber)
 			//	samplePolyline.m_nMaxZoomLevel = 18;
 			//}
 		//	else
+			if ( branch.volGrade == 220)
 			{
 				samplePolyline.m_nMinZoomLevel = 0;
-				samplePolyline.m_nMaxZoomLevel = 18;
+				samplePolyline.m_nMaxZoomLevel = 11;
 			}
+			else if (branch.volGrade == 110)
+			{
+				samplePolyline.m_nMinZoomLevel = 9;
+				samplePolyline.m_nMaxZoomLevel = 11;
+			}
+			else if (branch.volGrade == 35)
+			{
+				samplePolyline.m_nMinZoomLevel = 10;
+				samplePolyline.m_nMaxZoomLevel = 12;
+			}
+			else if (branch.volGrade == 10)
+			{
+				samplePolyline.m_nMinZoomLevel = 12;
+				samplePolyline.m_nMaxZoomLevel = 16;
+			}
+			
 			samplePolyline.m_sToolTipText.Format(_T("From: %d, To: %d, FromP: %f, CF: %f"), pDoc->m_Branchs[i].startBus, pDoc->m_Branchs[i].endBus, 0, 0);
 			samplePolyline.m_bDraggable = FALSE; //Allow the polyline to be draggable
 			samplePolyline.m_bEditable = TRUE; //Allow the polyline to be edited
@@ -2448,7 +2508,8 @@ void COSMCtrlAppView::UpdateStations(int timeNumber)
 				samplePolyline.m_colorPen = RGB(128, 0, 0);
 			else if (branch.volGrade == 35)
 				samplePolyline.m_colorPen = RGB(200, 128, 0);
-
+			else if (branch.volGrade == 10)
+				samplePolyline.m_colorPen = RGB(0, 0, 225);
 			m_ctrlOSM.m_Polylines.push_back(samplePolyline);
 		}
 		busBranchArray[int(branch.startBus)][int(branch.endBus)] += 1;
@@ -2500,15 +2561,32 @@ int COSMCtrlAppView::FindBusNumByI(double bus_i, std::vector<StationStruct> m_St
 {
 	double fatherNum;
 	int busNum;
+	busNum = -1;
 	for (int i = 0; i<m_Stations.size(); i++)
 	{
 		if (m_Stations[i].bus_i == bus_i)
 		{
-			
-					busNum = i;
-
+			fatherNum = m_Stations[i].father;
+			for (int j = 0; j<m_Stations.size(); j++)
+			{
+				if (m_Stations[j].bus_i == fatherNum)
+				{
+					busNum = j;
+					break;
+				}
+			}
 			break;
 		}
 	}
+	if (busNum == -1) 
+		busNum = -2;
 	return busNum;
+}
+void COSMCtrlAppView::SearchLoad(int relateBus)
+{
+	int i;
+	int k;
+	
+	for (i = 0; i < 24; ++i)
+		m_load[i] = pDoc->m_Stations[relateBus].load[i];
 }

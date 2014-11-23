@@ -30,8 +30,9 @@ public:
   COSMCtrlAppDoc* GetDocument() const;
   COSMCtrlAppDoc*pDoc;
   COSMCtrl& GetCtrl() { return m_ctrlOSM; };
-  double busBranchArray[81][81];
+  double m_load[24];
   int currentTimeInt;
+  void SearchLoad(int);
 // Operations
 public:
 
