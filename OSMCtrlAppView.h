@@ -34,6 +34,7 @@ public:
   double m_allload[24];
   int currentTimeInt;
   void SearchLoad(int);
+  void ChangeLoad(double*);
 // Operations
 public:
 
