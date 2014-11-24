@@ -456,7 +456,7 @@ int COSMCtrlAppView::OnCreate(LPCREATESTRUCT lpCreateStruct)
   {
 	  m_allload[i] = 0;
 	  for (int j = 1; j < loadArray.size(); ++j)
-		  m_allload[i] += atof(loadArray[j][i].c_str());
+		  m_allload[i] += atof(loadArray[j][i+1].c_str());
   }
   COSMCtrlAppDoc *pDoc = GetDocument();
   /*put bus data*/
@@ -482,7 +482,7 @@ int COSMCtrlAppView::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	  }
 	  for (int k = 0; k < 24; ++k)
 	  if ( mm != -1)
-		  station.load[k] = station.pd_max*atof(loadArray[mm][k].c_str());
+		  station.load[k] = station.pd_max*atof(loadArray[mm][k+1].c_str());
 	  else station.load[k] = 0;
 	  pDoc->m_Stations.push_back(station);
   }
@@ -2595,4 +2595,28 @@ void COSMCtrlAppView::SearchLoad(int relateBus)
 	
 	for (i = 0; i < 24; ++i)
 		m_load[i] = pDoc->m_Stations[relateBus].load[i];
+}
+void COSMCtrlAppView::ChangeLoad(double* new_load)
+{
+	int k;
+	k = FindBusNumByI(10543, pDoc->m_Stations);
+	for (int i = 0; i < 24; i++)
+	{
+		pDoc->m_Stations[k].load[i] = new_load[i];
+	}
+	//如果不可以，用下面的
+	/*
+	StationStruct station;
+	station.busName = pDoc->m_Stations[k].busName;
+	station.bus_i = pDoc->m_Stations[k].bus_i;
+	station.longitude = pDoc->m_Stations[k].longitude;
+	station.latitude = pDoc->m_Stations[k].latitude;
+	station.pd_max = pDoc->m_Stations[k].pd_max;
+	station.father = pDoc->m_Stations[k].father;
+	station.volGrade = pDoc->m_Stations[k].volGrade;
+	for (int i = 0; i < 24; ++i)
+		station.load[i] = new_load[i];
+	pDoc->m_Stations.pop_back();
+	pDoc->m_Stations.push_back(station);
+    */
 }
