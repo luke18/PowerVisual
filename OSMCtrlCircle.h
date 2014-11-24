@@ -53,7 +53,7 @@ public:
 //Member variables
   COSMCtrlPosition                    m_Position;            //The position of this circle
   double                              m_fRadius;             //The radius distance in meters
-  double							  relatedBus;
+  int								  relatedBus;
   BOOL                                m_bSelected;           //Is this circle selected
   float                               m_fLinePenWidth;       //The width of the line to draw
 #ifdef COSMCTRL_NOD2D

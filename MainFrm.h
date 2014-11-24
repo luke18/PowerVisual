@@ -15,6 +15,7 @@ public:
 
 	// Implementation
 public:
+	friend class CTableView;
 	CTableView *pTableView;
 	CInfoView *pInfoView;
 	CFunctionView *pFunctionView;

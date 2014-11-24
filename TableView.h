@@ -1,6 +1,6 @@
 #pragma once
 #include "ChartCtrl\ChartCtrl.h"
-#include "ChartCtrl\ChartCtrl.h"
+#include "ChartCtrl\ChartLineSerie.h"
 
 
 // CTableView 窗体视图
@@ -23,14 +23,16 @@ public:
 #endif
 
 protected:
-	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV 支持
+	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV 支持s
 
 	DECLARE_MESSAGE_MAP()
 public:
 	CChartCtrl m_ChartCtrl1;
+	CChartLineSerie *pLineSerie1;
 	virtual void OnInitialUpdate();
 	// Draw line graph from given time and load array
 	void DrawLineGraph(int dataNum, double *time, double *load);
+//	afx_msg void OnLButtonDblClk(UINT nFlags, CPoint point);
 };
 
 

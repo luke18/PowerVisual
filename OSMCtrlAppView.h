@@ -12,6 +12,8 @@
 #include <vector>
 #include <fstream>
 
+
+
 class CMySensorEvents : public SensorAPI::CSensorEvents
 {
 public:
@@ -227,6 +229,10 @@ protected:
   afx_msg void OnViewGotoCoordinates();
 
   friend class CMainFrame;
+public:
+//	afx_msg void OnRButtonDblClk(UINT nFlags, CPoint point);
+//	afx_msg void OnLButtonDblClk(UINT nFlags, CPoint point);
+//	void DblClickCircleView(int relatedBus);
 };
 
 #ifndef _DEBUG  // debug version in OSMCtrlAppView.cpp
