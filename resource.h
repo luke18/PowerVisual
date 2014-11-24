@@ -72,6 +72,7 @@
 #define IDC_CUSTOM1                     1028
 #define IDC_EDIT1                       1029
 #define IDC_EDIT2                       1030
+#define IDC_BUTTON1                     1031
 #define ID_ZOOM_0                       32772
 #define ID_ZOOM_1                       32773
 #define ID_ZOOM_2                       32774
@@ -138,7 +139,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        153
 #define _APS_NEXT_COMMAND_VALUE         32854
-#define _APS_NEXT_CONTROL_VALUE         1031
+#define _APS_NEXT_CONTROL_VALUE         1032
 #define _APS_NEXT_SYMED_VALUE           104
 #endif
 #endif

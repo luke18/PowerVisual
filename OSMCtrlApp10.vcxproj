@@ -168,7 +168,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseOfMfc>Static</UseOfMfc>
-    <CharacterSet>MultiByte</CharacterSet>
+    <CharacterSet>Unicode</CharacterSet>
     <PlatformToolset>v120</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug (GDI+)|x64'" Label="Configuration">
@@ -360,6 +360,7 @@
       <WarningLevel>Level4</WarningLevel>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <EnablePREfast>true</EnablePREfast>
+      <AdditionalIncludeDirectories>D:\Program Files\MATLAB Compiler Runtime\v83\extern\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -367,10 +368,11 @@
       <AdditionalIncludeDirectories>$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Link>
-      <AdditionalDependencies>gdiplus.lib;wininet.lib;winhttp.lib%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>gdiplus.lib;wininet.lib;winhttp.lib;EVPSO84.lib;mclmcrrt.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <TargetMachine>MachineX86</TargetMachine>
+      <AdditionalLibraryDirectories>D:\Program Files\MATLAB Compiler Runtime\v83\extern\lib\win64\microsoft;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug (GDI+)|Win32'">
@@ -418,6 +420,7 @@
       <WarningLevel>Level4</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <EnablePREfast>true</EnablePREfast>
+      <AdditionalIncludeDirectories>D:\Program Files\MATLAB Compiler Runtime\v83\extern\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -425,10 +428,11 @@
       <AdditionalIncludeDirectories>$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Link>
-      <AdditionalDependencies>gdiplus.lib;wininet.lib;winhttp.lib%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>gdiplus.lib;wininet.lib;winhttp.lib;mclmcrrt.lib;EVPSO84.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <TargetMachine>MachineX64</TargetMachine>
+      <AdditionalLibraryDirectories>D:\Program Files\MATLAB Compiler Runtime\v83\extern\lib\win64\microsoft;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug (GDI+)|x64'">
@@ -906,6 +910,7 @@
     <ClInclude Include="ChartCtrl\PointsOrdering.h" />
     <ClInclude Include="cnominatim.h" />
     <ClInclude Include="enumser.h" />
+    <ClInclude Include="EVPSO84.h" />
     <ClInclude Include="FunctionView.h" />
     <ClInclude Include="GotoCoordinatesDlg.h" />
     <ClInclude Include="GPSCom2Client.h" />
@@ -944,6 +949,7 @@
     <None Include="ChartCtrl\ChartLabel.inl" />
     <None Include="ChartCtrl\ChartPointsArray.inl" />
     <None Include="ChartCtrl\ChartSerieBase.inl" />
+    <None Include="EVPSO84.dll" />
     <None Include="res\icon1.png" />
     <None Include="res\OSMCtrlApp.ico" />
     <None Include="res\OSMCtrlApp.rc2" />
@@ -952,6 +958,9 @@
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="OSMCtrlApp.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Library Include="EVPSO84.lib" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

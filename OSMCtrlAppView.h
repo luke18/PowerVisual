@@ -12,6 +12,8 @@
 #include <vector>
 #include <fstream>
 
+#include "EVPSO84.h"
+
 
 
 class CMySensorEvents : public SensorAPI::CSensorEvents
@@ -234,6 +236,7 @@ public:
 //	afx_msg void OnRButtonDblClk(UINT nFlags, CPoint point);
 //	afx_msg void OnLButtonDblClk(UINT nFlags, CPoint point);
 //	void DblClickCircleView(int relatedBus);
+	void EVCalculate();
 };
 
 #ifndef _DEBUG  // debug version in OSMCtrlAppView.cpp
