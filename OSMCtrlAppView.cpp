@@ -2722,6 +2722,8 @@ void COSMCtrlAppView::EVCalculate()
 
 	for (int i = 0; i < 24; i++)
 		kwAllLoad[i] = m_allload[i] * 1000 - m_load[i]*1000;
+
+	MoveLoad(kwAllLoad);
 	input.SetData(kwAllLoad, 24);
 
 	mwArray output;
@@ -2740,6 +2742,7 @@ void COSMCtrlAppView::EVCalculate()
 	for (int i = 0; i < 24; i++)
 		evLoad[i] = m_load[i] / 1000;
 
+	MoveLoad(evLoad);
 	// Now m_load has the original EV load profile
 	SearchLoad(95);
 	
@@ -2753,3 +2756,17 @@ void COSMCtrlAppView::EVCalculate()
 	EVPSO84Terminate();
 	mclTerminateApplication();
 }
+
+
+void COSMCtrlAppView::MoveLoad(double load[])
+{
+	double tmp[24];
+	for (int i = 0; i < 12; i++)
+		tmp[i] = load[i + 12];
+	for (int i = 12; i < 24; i++)
+		tmp[i] = load[i - 12];
+	for (int i = 0; i < 23; i++)
+		load[i] = tmp[i];
+}
+
+

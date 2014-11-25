@@ -238,6 +238,7 @@ public:
 //	afx_msg void OnLButtonDblClk(UINT nFlags, CPoint point);
 //	void DblClickCircleView(int relatedBus);
 	void EVCalculate();
+	void MoveLoad(double load[]);
 };
 
 #ifndef _DEBUG  // debug version in OSMCtrlAppView.cpp
