@@ -27,6 +27,10 @@ protected:
 	DECLARE_MESSAGE_MAP()
 public:
 	afx_msg void OnBnClickedButtonRemoveSeries();
+	afx_msg void OnBnClickedDispatch();
+	afx_msg void OnBnClickedLoadBefore();
+//	double xTime[24];
+	afx_msg void OnBnClickedLoadAfter();
 };
 
 

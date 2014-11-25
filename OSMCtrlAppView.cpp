@@ -511,7 +511,6 @@ int COSMCtrlAppView::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	UpdateStations(40);
 	/* end put branch data*/
 	/*end put data into doc*/
-	EVCalculate();
 
 	// Load library
 	//CString str("EVPSO84.dll");
@@ -2716,7 +2715,40 @@ void COSMCtrlAppView::EVCalculate()
 	EVPSO84Initialize();
 
 	// Get current system load
+	mwArray input(1, 24, mxDOUBLE_CLASS, mxREAL);
+	double kwAllLoad[24];
 
+	SearchLoad(95);
+
+	for (int i = 0; i < 24; i++)
+		kwAllLoad[i] = m_allload[i] * 1000 - m_load[i]*1000;
+	input.SetData(kwAllLoad, 24);
+
+	mwArray output;
+	try{
+		EVPSO84(1, output, input);
+	}
+	catch (const mwException& erro)
+	{
+		CString str;
+		str = erro.what();
+		MessageBox(str, NULL, NULL);
+	}
+
+	output.GetData(m_load, 24);
+	double evLoad[24];
+	for (int i = 0; i < 24; i++)
+		evLoad[i] = m_load[i] / 1000;
+
+	// Now m_load has the original EV load profile
+	SearchLoad(95);
+	
+	// Get the load profile of distribution network after 
+	for (int i = 0; i < 24; i++)
+		m_allloadAfter[i] = m_allload[i] - m_load[i] + evLoad[i];
+	
+	// Change EV load profile
+	ChangeLoad(evLoad);
 
 	EVPSO84Terminate();
 	mclTerminateApplication();
