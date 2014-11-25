@@ -2472,6 +2472,8 @@ void COSMCtrlAppView::UpdateStations(int timeNumber)
 		StationStruct station2;
 		station1 = pDoc->m_Stations[branch.startBus];
 		station2 = pDoc->m_Stations[branch.endBus];
+
+
 		//pDoc->m_Stations.GetStation(startBus-1,&station1);
 		//pDoc->m_Stations.GetStation(endBus-1,&station2);
 		int bst, bend;
@@ -2480,6 +2482,12 @@ void COSMCtrlAppView::UpdateStations(int timeNumber)
 		if ((busBranchArray[bst][bend] == 0 && branch.startBus != branch.endBus))
 		{
 			COSMCtrlPolyline samplePolyline;
+			samplePolyline.fLon = station1.longitude;
+			samplePolyline.fLat = station1.latitude;
+			samplePolyline.tLon = station2.longitude;
+			samplePolyline.tLat = station2.latitude;
+			samplePolyline.voltage = branch.volGrade;
+
 			COSMCtrlNode tempPosition(station1.longitude, station1.latitude);
 			samplePolyline.m_Nodes.push_back(tempPosition);
 			tempPosition = COSMCtrlNode(station2.longitude, station2.latitude);
@@ -2726,7 +2734,7 @@ void COSMCtrlAppView::EVCalculate()
 	SearchLoad(95);
 
 	for (int i = 0; i < 24; i++)
-		kwAllLoad[i] = m_allload[i] * 1000 - m_load[i]*1000;
+		kwAllLoad[i] = m_allload[i] * 1000 - m_load[i] * 1000;
 
 	MoveLoad(kwAllLoad);
 	input.SetData(kwAllLoad, 24);
@@ -2750,11 +2758,11 @@ void COSMCtrlAppView::EVCalculate()
 	MoveLoad(evLoad);
 	// Now m_load has the original EV load profile
 	SearchLoad(95);
-	
+
 	// Get the load profile of distribution network after 
 	for (int i = 0; i < 24; i++)
 		m_allloadAfter[i] = m_allload[i] - m_load[i] + evLoad[i];
-	
+
 	// Change EV load profile
 	ChangeLoad(evLoad);
 
@@ -2775,3 +2783,76 @@ void COSMCtrlAppView::MoveLoad(double load[])
 }
 
 
+
+
+void COSMCtrlAppView::PowerFlowArrow()
+{
+	int size = m_ctrlOSM.m_Polylines.size();
+	double fLon, fLat, tLon, tLat;
+	double x1, y1, x2, y2, x3, y3, x4, y4;
+	double slope;
+	double dis12;
+
+	for (int i = 0; i < size; i++)
+	{
+		COSMCtrlPolyline&polyLine = m_ctrlOSM.m_Polylines[i];
+		fLon = polyLine.fLon;
+		fLat = polyLine.fLat;
+		tLon = polyLine.tLon;
+		tLat = polyLine.tLat;
+
+		x1 = (fLon + tLon) / 2;
+		y1 = (fLat + tLat) / 2;
+		slope = (y1 - fLat) / (x1 - fLon);
+		x2 = x1 - 0.05*(x1 - fLon) * 3;
+		y2 = y1 - 0.05*(y1 - fLat) * 3;
+
+		dis12 = sqrt((x2 - x1)*(x2 - x1) + (y2 - y1)*(y2 - y1));
+		x3 = x2 + (x1 - x2)*abs(slope);
+		x4 = 2 * x2 - x3;
+		y3 = (x2 - x3) / slope + y2;
+		y4 = 2 * y2 - y3;
+
+		//polygon for arrow
+		COSMCtrlPolygon samplePolygon;
+		COSMCtrlNode tempPosition = COSMCtrlNode(x1, y1);
+		samplePolygon.m_Nodes.push_back(tempPosition);
+		tempPosition = COSMCtrlNode(x3, y3);
+		samplePolygon.m_Nodes.push_back(tempPosition);
+		tempPosition = COSMCtrlNode(x4, y4);
+		samplePolygon.m_Nodes.push_back(tempPosition);
+#ifdef COSMCTRL_NOD2D
+		samplePolygon.m_DashCap = Gdiplus::DashCapRound;
+		samplePolygon.m_EndCap = Gdiplus::LineCapSquareAnchor;
+		samplePolygon.m_StartCap = Gdiplus::LineCapArrowAnchor;
+		samplePolygon.m_LineJoin = Gdiplus::LineJoinBevel;
+		samplePolygon.m_colorPen = Gdiplus::Color(0, 0, 255);
+#else
+		samplePolygon.m_DashCap = D2D1_CAP_STYLE_ROUND;
+		samplePolygon.m_EndCap = D2D1_CAP_STYLE_SQUARE;
+		samplePolygon.m_StartCap = D2D1_CAP_STYLE_TRIANGLE;
+		samplePolygon.m_LineJoin = D2D1_LINE_JOIN_BEVEL;
+		samplePolygon.m_colorPen = D2D1::ColorF(0, 0, 255);
+		//if (totalFlow > branch.capacity)
+		//	samplePolygon.m_colorBrush = D2D1::ColorF(255, 0, 0);
+#endif
+		samplePolygon.m_fDashOffset = 3;
+		samplePolygon.m_fLinePenWidth = 1;
+
+		samplePolygon.m_nMinZoomLevel = 0;
+		samplePolygon.m_nMaxZoomLevel = 0;
+		if (polyLine.voltage == 10)
+		{
+			samplePolygon.m_nMinZoomLevel = 13;
+			samplePolygon.m_nMaxZoomLevel = 18;
+		}
+
+
+		samplePolygon.m_sToolTipText = _T("A simple Polygon example for COSMCtrl");
+		samplePolygon.m_bDraggable = FALSE; //Allow the polygon to be draggable
+		samplePolygon.m_bEditable = TRUE; //Allow the polygon to be editable
+		m_ctrlOSM.m_Polygons.push_back(samplePolygon);
+
+
+	}
+}

@@ -239,6 +239,7 @@ public:
 //	void DblClickCircleView(int relatedBus);
 	void EVCalculate();
 	void MoveLoad(double load[]);
+	void PowerFlowArrow();
 };
 
 #ifndef _DEBUG  // debug version in OSMCtrlAppView.cpp

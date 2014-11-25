@@ -59,6 +59,11 @@ COSMCtrlPolyline::COSMCtrlPolyline() : m_fLinePenWidth(2),
                                        m_nMinZoomLevel(COSMCtrlHelper::OSMMinZoom),
                                        m_nMaxZoomLevel(COSMCtrlHelper::OSMMaxZoom)
 {
+	fLon = 0.0;
+	fLat = 0.0;
+	tLon = 0.0;
+	tLat = 0.0;
+	voltage = 0.0;
 }
 
 COSMCtrlPolyline::COSMCtrlPolyline(const COSMCtrlPolyline& polyline)
@@ -68,7 +73,8 @@ COSMCtrlPolyline::COSMCtrlPolyline(const COSMCtrlPolyline& polyline)
                                                                       m_colorSelectionNode(D2D1::ColorF::Black)
                                                                   #endif
 {
-  *this = polyline;
+	*this = polyline;
+
 }
 
 COSMCtrlPolyline& COSMCtrlPolyline::operator=(const COSMCtrlPolyline& polyline)
@@ -97,6 +103,11 @@ COSMCtrlPolyline& COSMCtrlPolyline::operator=(const COSMCtrlPolyline& polyline)
   m_bHitTest            = polyline.m_bHitTest;
   m_nMinZoomLevel       = polyline.m_nMinZoomLevel;
   m_nMaxZoomLevel       = polyline.m_nMaxZoomLevel;
+  fLon = polyline.fLon;
+  fLat = polyline.fLat;
+  tLon = polyline.tLon;
+  tLat = polyline.tLat;
+  voltage = polyline.voltage;
   
   return *this;
 }

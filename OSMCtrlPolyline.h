@@ -98,6 +98,11 @@ public:
   BOOL                                m_bHitTest;             //Is this polyline to be hit-tested
   int                                 m_nMinZoomLevel;        //The minimum zoom level at which this polyline appears
   int                                 m_nMaxZoomLevel;        //The max zoom level at which this polyline appears
+  double fLon;
+  double fLat;
+  double tLon;
+  double tLat;
+  double voltage;
 };
 
 

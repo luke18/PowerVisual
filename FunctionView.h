@@ -31,6 +31,7 @@ public:
 	afx_msg void OnBnClickedLoadBefore();
 //	double xTime[24];
 	afx_msg void OnBnClickedLoadAfter();
+	afx_msg void OnBnClickedBranchArrow();
 };
 
 

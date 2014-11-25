@@ -31,6 +31,7 @@ BEGIN_MESSAGE_MAP(CFunctionView, CFormView)
 	ON_BN_CLICKED(IDC_BUTTON2, &CFunctionView::OnBnClickedDispatch)
 	ON_BN_CLICKED(IDC_BUTTON3, &CFunctionView::OnBnClickedLoadBefore)
 	ON_BN_CLICKED(IDC_BUTTON4, &CFunctionView::OnBnClickedLoadAfter)
+	ON_BN_CLICKED(IDC_BUTTON5, &CFunctionView::OnBnClickedBranchArrow)
 END_MESSAGE_MAP()
 
 
@@ -101,4 +102,16 @@ void CFunctionView::OnBnClickedLoadAfter()
 		xTime[i] = i;
 
 	pTableView->DrawLineGraph(24, xTime, pMapView->m_allloadAfter);
+}
+
+
+void CFunctionView::OnBnClickedBranchArrow()
+{
+	// TODO:  在此添加控件通知处理程序代码
+	CMainFrame *pFrame = (CMainFrame *)AfxGetMainWnd();
+	CTableView* pTableView = (CTableView *)pFrame->pTableView;
+	COSMCtrlAppView* pMapView = (COSMCtrlAppView*)pFrame->pMapView;
+	CInfoView* pInfoView = (CInfoView*)pFrame->pInfoView;
+
+	pMapView->PowerFlowArrow();
 }
