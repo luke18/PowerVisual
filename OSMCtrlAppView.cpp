@@ -2353,18 +2353,19 @@ void COSMCtrlAppView::UpdateStations(int timeNumber)
 #else
 			sampleCircle.m_colorBrush = D2D1::ColorF(200, 128, 0, 50);
 #endif
-			sampleCircle.m_nMinZoomLevel = 10;
-			sampleCircle.m_nMaxZoomLevel = 12;
+			sampleCircle.m_nMinZoomLevel = 11;
+			sampleCircle.m_nMaxZoomLevel = 11;
 		}
 		else if (station.volGrade == 10)
 		{
 #ifdef COSMCTRL_NOD2D
-			sampleCircle.m_colorBrush = Gdiplus::Color(0, 0, 225);
+			sampleCircle.m_colorBrush = Gdiplus::Color(0, 125, 0);
 #else
-			sampleCircle.m_colorBrush = D2D1::ColorF(0, 0, 225, 50);
+			sampleCircle.m_colorBrush = D2D1::ColorF(0, 125, 0, 50);
 #endif
 			sampleCircle.m_nMinZoomLevel = 12;
 			sampleCircle.m_nMaxZoomLevel = 16;
+			sampleCircle.m_fRadius = 80;
 		}
 #ifdef COSMCTRL_NOD2D
 		sampleCircle.m_DashStyle = Gdiplus::DashStyleDashDot;
@@ -2504,8 +2505,8 @@ void COSMCtrlAppView::UpdateStations(int timeNumber)
 			}
 			else if (branch.volGrade == 35)
 			{
-				samplePolyline.m_nMinZoomLevel = 10;
-				samplePolyline.m_nMaxZoomLevel = 12;
+				samplePolyline.m_nMinZoomLevel = 11;
+				samplePolyline.m_nMaxZoomLevel = 11;
 			}
 			else if (branch.volGrade == 10)
 			{
@@ -2524,7 +2525,7 @@ void COSMCtrlAppView::UpdateStations(int timeNumber)
 			else if (branch.volGrade == 35)
 				samplePolyline.m_colorPen = RGB(200, 128, 0);
 			else if (branch.volGrade == 10)
-				samplePolyline.m_colorPen = RGB(0, 0, 225);
+				samplePolyline.m_colorPen = RGB(0, 125, 0);
 			m_ctrlOSM.m_Polylines.push_back(samplePolyline);
 		}
 		busBranchArray[int(branch.startBus)][int(branch.endBus)] += 1;
@@ -2632,7 +2633,11 @@ void COSMCtrl::HandleLButtonDblClickCircle(UINT /*nFlags*/, CPoint /*point*/, Ma
 	pBoxOne = (CEdit*)pInfoView->GetDlgItem(IDC_EDIT1);
 	pBoxTwo = (CEdit*)pInfoView->GetDlgItem(IDC_EDIT2);
 
+	CString editBusVoltage;
+	editBusVoltage.Format(_T("%f"), station.volGrade);
+
 	pBoxOne->SetWindowTextW(station.busName);
+	pBoxTwo->SetWindowTextW(editBusVoltage);
 
 }
 
