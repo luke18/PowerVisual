@@ -950,6 +950,7 @@
     <None Include="ChartCtrl\ChartPointsArray.inl" />
     <None Include="ChartCtrl\ChartSerieBase.inl" />
     <None Include="EVPSO84.dll" />
+    <None Include="README.md" />
     <None Include="res\icon1.png" />
     <None Include="res\OSMCtrlApp.ico" />
     <None Include="res\OSMCtrlApp.rc2" />
