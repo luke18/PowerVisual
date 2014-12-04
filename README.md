@@ -14,4 +14,5 @@ In the first place, your laptop should be 64-bit.
 * Under C/C++ properties, set the "Additional Include Directories" to "$(MCRv83)\extern\include"
 * Under "Linker", set the "Additional Library Directories" to "$(MCRv83)\extern\lib\win64\microsoft"
 * Extend the PATH environment variable to include the directory "%MCRv83%\runtime\win64"
+* Build filter named ChartCtrl and EVPSO84, put the related files into them.
 * Put EVPSO84.dll into the above PATH
