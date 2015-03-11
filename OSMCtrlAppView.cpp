@@ -1,5 +1,5 @@
 #include "stdafx.h"
-#include "OSMCtrlApp.h" //
+#include "OSMCtrlApp.h"
 #include "OSMCtrlAppDoc.h" 
 #include "OSMCtrlAppView.h"
 #include "TilePropertiesDlg.h"
