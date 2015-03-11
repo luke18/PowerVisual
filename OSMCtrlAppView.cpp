@@ -6,7 +6,7 @@
 #include "GPSSettingsDlg.h"
 #include "cnominatim.h" //If you get a compilation error about this missing header file, then you need to download my CNominatim class from http://www.naughter.com/nominatim.html
 #include "SearchDlg.h"
-#include "SearchResultsDlg.h"
+#include "SearchResultsDlg.h"//
 #include "GotoCoordinatesDlg.h"
 
 
